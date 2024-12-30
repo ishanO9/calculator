@@ -12,18 +12,43 @@ function multiply(num1,num2)
 }
 function divide(num1,num2)
 {
-    return (num1/num2);
+    if(num2 === 0)
+    {
+        return "too bad";
+    }
+    if(num1%num2 === 0 && typeof(num1) !== 'float')
+    {
+        return (num1/num2);
+    }
+    if(num1%num2 !== 0)
+    {
+        return ((num1/num2).toFixed(6));
+    }
 }
 console.log(add(2,3));
 console.log(divide(6,3));
 let num1,num2,operator;
+
 function operate(num1,num2,operator)
 {
+    maxsign = 0;
+
     switch(operator)
     {
-        case '+': console.log(add(num1,num2));
+        case '+': screen.textContent = add(num1,num2);
         break;
-        case '-': subtract(num1,num2);
+        case '-': screen.textContent = subtract(num1,num2);
+        break;
+        case '*': screen.textContent = multiply(num1,num2);
+        break;
+        case '/': console.log(`${num1} ${num2}`);
+        screen.textContent = divide(parseFloat(num1),parseFloat(num2));
+        if(screen.textContent === 'too bad')
+        {
+            setTimeout(() =>{
+                screen.textContent = "";
+            },2000)
+        }
         break;
         
     }    
@@ -65,21 +90,37 @@ for(i of symb)
 }
 
 
-let num ;
+let num = [];
 let sign;
 let maxsign = 0;
 screen.textContent = '';
+let x = 1;
 
 
 operandinputbts.forEach((operandbutton) => {
     operandbutton.onclick = ()=>{
+
+        num += operandbutton.textContent;
+        if(num.length < 13)
+        {
             screen.textContent += operandbutton.textContent;
-            num = screen.textContent;
+        }          
     }
 })
 operatorinputbts.forEach((operatorbutton) => {
     operatorbutton.onclick = ()=>{
-            if(valid.includes(operatorbutton.textContent) && maxsign < 1 && screen.textContent !== '' && operatorbutton.textContent !== "=")
+
+            num = [];
+            //if(screen.textContent.length < 14)
+            if(screen.textContent === '')
+            {
+                if(operatorbutton.textContent === '-')
+                {
+                    screen.textContent += operatorbutton.textContent;
+                    operatorbutton.stopPropogation();
+                }
+            }
+            if(valid.includes(operatorbutton.textContent) && maxsign < 1 && screen.textContent !== '' && operatorbutton.textContent !== "=" && screen.textContent !== '-')
             {
 
                 screen.textContent += operatorbutton.textContent;
@@ -100,15 +141,17 @@ operatorinputbts.forEach((operatorbutton) => {
                 screen.textContent = txt;
                 maxsign = 0;
             }
+
             else if(operatorbutton.textContent === "=")
             {
                 let arr = screen.textContent.split('');
                 console.log(arr);
-                convertor(arr);
-               
+                convertor(arr); 
             }
+
     }
 })
+
 let ops = "+-/*";
 function convertor(array)
 {
@@ -116,8 +159,14 @@ function convertor(array)
     let num1 = [];
     let num2 = [];
     let i =0;
-    while(!ops.includes(array[i]))
+
+    if(array[0] === '-')
     {
+        num1[0] = '-';
+        i++;
+    }
+    while(!ops.includes(array[i]))
+    {   
         num1 += array[i];
         i++;
     }
@@ -128,7 +177,11 @@ function convertor(array)
         num2 += array[i];
         i++;
     }
-
-    operate(parseInt(num1),parseInt(num2),op);
+    console.log(`${num1} this`);
+    console.log(num2);
+    console.log(op);
+    console.log(num1);
+    if(num2.length !== 0)
+        operate(parseFloat(num1),parseFloat(num2),op);
 
 }
