@@ -1,14 +1,15 @@
 function add(num1,num2)
 {
-    return (num1+num2);
+    return parseFloat((num1+num2).toFixed(3));
 }
 function subtract(num1,num2)
 {
-    return(num1-num2);
+    let n = parseFloat((num1-num2).toFixed(3));
+    return n;
 }
 function multiply(num1,num2)
 {
-    return (num1 * num2);
+    return (num1 * num2).toFixed(3);
 }
 function divide(num1,num2)
 {
@@ -90,34 +91,40 @@ for(i of symb)
 }
 
 
-let num = [];
+
 let sign;
 let maxsign = 0;
 screen.textContent = '';
 let x = 1;
+let ops = "+-/*";
+let num = 0;
+decimalbutton.onclick = ()=>{
 
+    if(screen.textContent !== '' && (screen.textContent.match(/./g) || []).length !== 3)
+    {
+        screen.textContent += decimalbutton.textContent;
+        decimalbutton.disabled = true;
+    }
+}
+console.log(Array.from(screen.textContent));
 
 operandinputbts.forEach((operandbutton) => {
     operandbutton.onclick = ()=>{
+        num++;
 
-        num += operandbutton.textContent;
-        if(num.length < 13)
-        {
-            screen.textContent += operandbutton.textContent;
-        }          
+        screen.textContent += operandbutton.textContent;
+        
     }
 })
 operatorinputbts.forEach((operatorbutton) => {
     operatorbutton.onclick = ()=>{
-
-            num = [];
-            //if(screen.textContent.length < 14)
+            decimalbutton.disabled = false;
+            
             if(screen.textContent === '')
             {
                 if(operatorbutton.textContent === '-')
                 {
-                    screen.textContent += operatorbutton.textContent;
-                    operatorbutton.stopPropogation();
+                    screen.textContent += operatorbutton.textContent;   
                 }
             }
             if(valid.includes(operatorbutton.textContent) && maxsign < 1 && screen.textContent !== '' && operatorbutton.textContent !== "=" && screen.textContent !== '-')
@@ -133,26 +140,29 @@ operatorinputbts.forEach((operatorbutton) => {
             else if(operatorbutton.textContent === "AC")
             {
                 screen.textContent = '';
-                maxsign = 0;
             }
             else if(operatorbutton.textContent === "del")
             {
                 let txt = screen.textContent.slice(0,-1);
                 screen.textContent = txt;
-                maxsign = 0;
+                //decimalbutton.disabled = true;
             }
-
             else if(operatorbutton.textContent === "=")
             {
-                let arr = screen.textContent.split('');
-                console.log(arr);
-                convertor(arr); 
+
+                if(screen.textContent.includes('+')||screen.textContent.includes('-')||screen.textContent.includes('*')||screen.textContent.includes('/'))
+                {
+                    let arr = screen.textContent.split('');
+                    convertor(arr);
+                    decimalbutton.disabled = true;
+                }     
+            }     
             }
 
     }
-})
+)
+// clicking = before typing the full thing (33+) results in all the operation buttons and stuff not wokring
 
-let ops = "+-/*";
 function convertor(array)
 {
     console.log(array);
@@ -177,11 +187,14 @@ function convertor(array)
         num2 += array[i];
         i++;
     }
+    if(num2.length === 0)
+        {
+            num2 = 0;
+        }
     console.log(`${num1} this`);
     console.log(num2);
     console.log(op);
     console.log(num1);
     if(num2.length !== 0)
         operate(parseFloat(num1),parseFloat(num2),op);
-
 }
