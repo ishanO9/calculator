@@ -9,7 +9,7 @@ function subtract(num1,num2)
 }
 function multiply(num1,num2)
 {
-    return (num1 * num2).toFixed(3);
+    return parseFloat((num1 * num2).toFixed(3));
 }
 function divide(num1,num2)
 {
@@ -23,7 +23,7 @@ function divide(num1,num2)
     }
     if(num1%num2 !== 0)
     {
-        return ((num1/num2).toFixed(6));
+        return (parseFloat(num1/num2).toFixed(6));
     }
 }
 console.log(add(2,3));
@@ -140,11 +140,13 @@ operatorinputbts.forEach((operatorbutton) => {
             else if(operatorbutton.textContent === "AC")
             {
                 screen.textContent = '';
+                maxsign = 0;
             }
             else if(operatorbutton.textContent === "del")
             {
                 let txt = screen.textContent.slice(0,-1);
                 screen.textContent = txt;
+                maxsign = 0;
                 //decimalbutton.disabled = true;
             }
             else if(operatorbutton.textContent === "=")
@@ -175,7 +177,7 @@ function convertor(array)
         num1[0] = '-';
         i++;
     }
-    while(!ops.includes(array[i]))
+    while(!ops.includes(array[i]) && i < array.length)
     {   
         num1 += array[i];
         i++;
