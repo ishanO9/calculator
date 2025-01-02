@@ -4,7 +4,7 @@ body{
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
-    background-color: rgb(220, 217, 194);
+    background-color: rgb(62, 62, 60);
 }
 
 .body{
@@ -15,8 +15,8 @@ body{
     justify-content: space-around;
     height: 500px;
     width: 400px;
-    background-color: rgb(28, 50, 91);
-    border: 10px solid rgb(154, 191, 128);
+    background-color: #546A7B;
+    border: 10px solid #0D1F2D;
     border-radius: 20px;
     margin: 10px;
     padding: 20px;
@@ -27,48 +27,60 @@ body{
     justify-content: end;
     align-items: end;
     padding-right: 20px;
-    color: rgb(229, 227, 212);
+    color: #0D1F2D;
     font-size: 50px;
     font-weight: bold;
     font-family:monospace;
-    background-color: rgb(106, 102, 157);
+    background-image: linear-gradient(#9EA3B0,#567272);
     width: 400px;
     height: 200px;
     margin-bottom: 0px;
-    border: 4px solid rgb(154, 191, 128);
+    border: 4px solid #0D1F2D;
     border-radius: 20px;
 
 }
 .buttons{
     display: flex;
     justify-content: space-between;
-    flex-grow: 1;
-
-    
+    flex-grow: 0;
+    flex-shrink: 0;
 }
+
 .operands{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: start;    
     min-width: 235px;
-
-    
 }
 .operandbtn{
     background-color: white;
     flex-grow: 1;
+}
+
+.operatorbtn:hover{
+    background-color: #E4C3AD;
+    transition: background-color 0.3s ease-in-out;
+}
+.operandbtn:hover{
+    background-color: #E4C3AD;
+    transition: background-color 0.3s ease-in-out;
+}
+.operandbtn:active,
+.operatorbtn:active{
+    border: 3px solid #403838;
+    background-color: #c5a088;
+    font-size: 27px;
+    transition: background-color 0.1s;
+    
 }
 .operations{
     display: flex;
     flex-wrap: wrap;
     min-width: 100px;
     justify-content: center;
+}
 
-}
-.operatorbtn{
-    background-color: white;
-}
 .operatorbtn,
 .operandbtn{
     background-color: white;
@@ -76,10 +88,18 @@ body{
     width: 70px;
     margin: 4px;
     border-radius: 20px;
-    border: 3px solid rgb(154, 191, 128);
+    border: 3px solid #0D1F2D;
     font-size: 30px;
     font-weight: bold;
     font-family:monospace;
-    background-color: rgb(46, 46, 185);
-    color: rgb(229, 227, 212);
+    background-color: #FAE1DF;
+    color: #0D1F2D;
+    box-shadow: 0px 5px #0D1F2D;
+
+}
+.operatorbtn{
+    background-color: white;
+    background-color: #FAE1DF;
+    border: 3px solid #0D1F2D;
+   
 }

@@ -17,14 +17,15 @@ function divide(num1,num2)
     {
         return "too bad";
     }
+    let val = num1/num2;
     if(num1%num2 === 0 && typeof(num1) !== 'float')
     {
-        return (num1/num2);
+        return val;
     }
     if(num1%num2 !== 0)
     {
-        return (parseFloat(num1/num2).toFixed(6));
-    }
+        return (parseFloat(val).toFixed(3));
+    }  
 }
 console.log(add(2,3));
 console.log(divide(6,3));
@@ -33,7 +34,6 @@ let num1,num2,operator;
 function operate(num1,num2,operator)
 {
     maxsign = 0;
-
     switch(operator)
     {
         case '+': screen.textContent = add(num1,num2);
@@ -50,11 +50,9 @@ function operate(num1,num2,operator)
                 screen.textContent = "";
             },2000)
         }
-        break;
-        
+        break;     
     }    
 }
-
 const calcbody = document.querySelector(".body");
 const buttons = document.querySelector(".buttons");
 const operands = document.querySelector(".operands");
@@ -90,14 +88,13 @@ for(i of symb)
     j++;
 }
 
-
-
 let sign;
 let maxsign = 0;
 screen.textContent = '';
 let x = 1;
 let ops = "+-/*";
 let num = 0;
+
 decimalbutton.onclick = ()=>{
 
     if(screen.textContent !== '' && (screen.textContent.match(/./g) || []).length !== 3)
@@ -106,36 +103,39 @@ decimalbutton.onclick = ()=>{
         decimalbutton.disabled = true;
     }
 }
-console.log(Array.from(screen.textContent));
-
 operandinputbts.forEach((operandbutton) => {
-    operandbutton.onclick = ()=>{
-        num++;
 
-        screen.textContent += operandbutton.textContent;
+    operandbutton.onclick = ()=>{
+        if(screen.textContent.length < 14)
+        {
+            num++;
+            screen.textContent += operandbutton.textContent;
+        }
         
-    }
+    }    
 })
 operatorinputbts.forEach((operatorbutton) => {
     operatorbutton.onclick = ()=>{
             decimalbutton.disabled = false;
-            
+            if(screen.textContent.length < 14)
+            {
+                if(valid.includes(operatorbutton.textContent) && maxsign < 1 && screen.textContent !== '' && operatorbutton.textContent !== "=" && screen.textContent !== '-')
+                    {
+        
+                        screen.textContent += operatorbutton.textContent;
+                        if(operatorbutton.textContent !== '.')
+                        {
+                            maxsign++;
+                        }  
+                        sign = screen.textContent;
+                    }
+            }
             if(screen.textContent === '')
             {
                 if(operatorbutton.textContent === '-')
                 {
                     screen.textContent += operatorbutton.textContent;   
                 }
-            }
-            if(valid.includes(operatorbutton.textContent) && maxsign < 1 && screen.textContent !== '' && operatorbutton.textContent !== "=" && screen.textContent !== '-')
-            {
-
-                screen.textContent += operatorbutton.textContent;
-                if(operatorbutton.textContent !== '.')
-                {
-                    maxsign++;
-                }  
-                sign = screen.textContent;
             }
             else if(operatorbutton.textContent === "AC")
             {
@@ -146,8 +146,8 @@ operatorinputbts.forEach((operatorbutton) => {
             {
                 let txt = screen.textContent.slice(0,-1);
                 screen.textContent = txt;
+                console.log(txt.length);
                 maxsign = 0;
-                //decimalbutton.disabled = true;
             }
             else if(operatorbutton.textContent === "=")
             {
@@ -160,10 +160,8 @@ operatorinputbts.forEach((operatorbutton) => {
                 }     
             }     
             }
-
     }
 )
-// clicking = before typing the full thing (33+) results in all the operation buttons and stuff not wokring
 
 function convertor(array)
 {
